@@ -1,4 +1,3 @@
-import { resolve } from 'path';
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
@@ -9,17 +8,9 @@ export default defineConfig({
     port: 3000,
   },
   resolve: {
-    alias: [
-      {
-        find: '@',
-        replacement: resolve(__dirname, '../src'),
-      },
-      {
-        find: 'assets',
-        replacement: resolve(__dirname, '../src/assets'),
-      }
-    ],
-    extensions: ['.ts', '.js'],
+    alias: {
+      '@': '/src',
+    }
   },
   plugins: [react()],
 })
