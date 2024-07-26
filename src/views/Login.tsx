@@ -3,7 +3,9 @@ import request from '@/utils/request.ts'
 import { showLoading } from '@/utils/loading'
 
 const Login: React.FC = () => {
-  showLoading()
+  useEffect(() => {
+    showLoading()
+  })
   return <div>Login Page</div>
 }
 
