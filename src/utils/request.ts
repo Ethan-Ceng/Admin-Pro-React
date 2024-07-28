@@ -1,8 +1,14 @@
 import axios, { AxiosError, request } from 'axios'
 import { hideLoading, showLoading } from '@/utils/loading'
 import { message } from 'antd'
-import { Simulate } from 'react-dom/test-utils'
-import error = Simulate.error
+import storage from '@/utils/storage.ts'
+import { configs } from '@typescript-eslint/eslint-plugin'
+
+export interface Result<T = any>{
+  code:number
+  data: T
+  msg: string
+}
 
 const instance = axios.create({
   baseUrl: '/api',
@@ -14,8 +20,8 @@ const instance = axios.create({
 // 请求拦截器
 instance.interceptors.request.use(
   config => {
-    showLoading()
-    const token = localstorage.getItem('token')
+    if (config.showLoading) showLoading()
+    const token = storage.get('token')
     if (token) {
       config.headers.Authorization = 'Token::' + token
     }
@@ -30,15 +36,19 @@ instance.interceptors.request.use(
 
 // 响应拦截
 instance.interceptors.response.use(response => {
-  const data = response.data
+  const data: Result = response.data
   hideLoading()
   if (data.code === 50001) {
     message.error(data.msg)
-    localStorage.removeItem('token')
+    storage.remove('token')
     location.href = '/login'
   } else if (data.code != 0) {
-    message.error(data.msg)
-    return Promise.reject(data)
+    if (response.config.showError === false) {
+      return Promise.resolve(data)
+    } else {
+      message.error(data.msg)
+      return Promise.reject(data)
+    }
   }
   return data.data
 }, error => {
@@ -47,11 +57,16 @@ instance.interceptors.response.use(response => {
   return Promise.reject(error.message)
 })
 
+interface IConfig {
+  showLoading: boolean
+  showError: boolean
+}
+
 export default {
-  get<T>(url: string, params?: object): Promise<T> {
-    return axios.get(url, { params })
+  get<T>(url: string, params?: object, options?: IConfig): Promise<T> {
+    return axios.get(url, { params, ...options })
   },
-  post<T>(url: string, params?: object): Promise<T> {
-    return axios.post(url, params)
+  post<T>(url: string, params?: object, options?: IConfig): Promise<T> {
+    return axios.post(url, params, options)
   }
 }
