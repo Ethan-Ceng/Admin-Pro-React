@@ -1,6 +1,4 @@
 import React, { useEffect } from 'react'
-import request from '@/utils/request.ts'
-import { showLoading } from '@/utils/loading'
 import LogoImg from '@/assets/images/HSBC-logo.png'
 import styles from './index.module.less'
 import type { FormProps } from 'antd'

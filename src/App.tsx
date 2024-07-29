@@ -6,6 +6,7 @@ import router from '@/router/index'
 function App() {
   return <ConfigProvider
     theme={{
+      dark: false,
       token: {
         // Seed Token，影响范围大
         borderRadius: 2
