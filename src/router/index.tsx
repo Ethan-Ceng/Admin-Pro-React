@@ -1,27 +1,63 @@
+import React from 'react'
 import { createBrowserRouter, Navigate } from 'react-router-dom'
-import Login from '@/views/login/Login.tsx'
-import Error404 from '@/views/Error404.tsx'
-import NotFound from '@/views/NotFound.tsx'
+import Login from '@/views/login/Login'
+import Welcome from '@/views/welcome'
+import Error403 from '@/views/403'
+import Error404 from '@/views/404'
 import Layout from '@/layout'
-import Welcome from '@/views/Welcome.tsx'
+import AuthLoader from './AuthLoader'
+import { lazyLoad } from './LazyLoad'
 
-
-const router = [
+export const router = [
   {
     path: '/',
-    element: <Welcome />
+    element: <Navigate to='/welcome' />
   },
   {
     path: '/login',
     element: <Login />
   },
   {
+    id: 'layout',
     element: <Layout />,
+    loader: AuthLoader,
     children: [
       {
         path: '/welcome',
         element: <Welcome />
       },
+      {
+        path: '/dashboard',
+        element: lazyLoad(React.lazy(() => import('@/views/dashboard')))
+      },
+      {
+        path: '/userList',
+        element: lazyLoad(React.lazy(() => import('@/views/system/user')))
+      },
+      {
+        path: '/deptList',
+        element: lazyLoad(React.lazy(() => import('@/views/system/dept')))
+      },
+      {
+        path: '/menuList',
+        element: lazyLoad(React.lazy(() => import('@/views/system/menu')))
+      },
+      {
+        path: '/roleList',
+        element: lazyLoad(React.lazy(() => import('@/views/system/role')))
+      },
+      {
+        path: '/orderList',
+        element: lazyLoad(React.lazy(() => import('@/views/order/OrderList')))
+      },
+      {
+        path: '/cluster',
+        element: lazyLoad(React.lazy(() => import('@/views/order/OrderCluster')))
+      },
+      {
+        path: '/driverList',
+        element: lazyLoad(React.lazy(() => import('@/views/order/DriverList')))
+      }
     ]
   },
   {
@@ -29,17 +65,13 @@ const router = [
     element: <Navigate to='/404' />
   },
   {
-    path: '/401',
+    path: '/404',
     element: <Error404 />
   },
   {
     path: '/403',
-    element: <Error404 />
-  },
-  {
-    path: '/404',
-    element: <NotFound />
-  },
+    element: <Error403 />
+  }
 ]
 
 export default createBrowserRouter(router)

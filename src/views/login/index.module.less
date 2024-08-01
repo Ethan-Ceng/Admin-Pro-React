@@ -1,31 +1,21 @@
-.wrapper {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #fafafa;
-
-  .login {
-    width: 520px;
-    border: 1px solid rgba(5, 5, 5, 0.06);
-    background-color: #ffffff;
-
-    .loginHeader {
-      background-color: #1a1a1a;
-      display: flex;
-      align-items: center;
-      padding: 16px;
-      color: #ffffff;
-      font-size: 24px;
-
-      .logo {
-        margin-right: 10px;
-        height: 32px;
-      }
-    }
-
-    .loginBody {
-      padding: 24px 48px 24px;
-    }
-  }
+.login {
+  height: 100vh;
+  background: url(/imgs/login_bg.jpeg) no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.title {
+  font-size: 42px;
+  line-height: 1.5;
+  text-align: center;
+  margin-bottom: 30px;
+}
+.loginWrapper {
+  background-color: #fff;
+  position: absolute;
+  top: 50%;
+  right: 10%;
+  width: 500px;
+  transform: translateY(-50%);
+  padding: 50px;
 }

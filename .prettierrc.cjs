@@ -7,7 +7,7 @@ module.exports = {
   tabWidth: 2,
   // 结尾不用分号
   semi: false,
-  //使用单引号
+  // 使用单引号
   singleQuote: true,
   // 在JSX中使用单引号而不是双引号
   jsxSingleQuote: true,
@@ -16,5 +16,5 @@ module.exports = {
   // 对象、数组括号与文字间添加空格
   bracketSpacing: true,
   // 尾随逗号
-  trailingComma: 'none'
+  trailingComma: 'none',
 }
